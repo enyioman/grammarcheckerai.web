@@ -50,7 +50,7 @@ const index = () => {
                   type="email"
                   onChange={(e) => setUserEmail(e.target.value)}
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                  placeholder="shalomtaiwo@example.com"
+                  placeholder="shalommeisie@example.com"
                   id="signupEmail"
                   required
                 />

@@ -50,7 +50,7 @@ function useCustomMutation(mutationData) {
     ...others,
   });
 
-  return { ...mutatationResult, value: mutatationResult?.data?.data };
+  return { ...mutatationResult, value: mutatationResult };
 }
 
 export default useCustomMutation;

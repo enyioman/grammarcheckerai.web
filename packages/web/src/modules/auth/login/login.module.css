@@ -378,7 +378,7 @@
     justify-content: center;
   }
   ._gs2logininput {
-    padding: 25px 0;
+    padding: 25px 0 5px 0;
   }
   ._gs2mainlogincol2images img:first-child {
     width: 100%;

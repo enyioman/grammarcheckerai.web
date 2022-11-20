@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import styles from './login.module.css';
@@ -8,24 +8,17 @@ import Image1 from '../../../assets/error 1.png';
 import google from '../../../assets/google.png';
 import apple from '../../../assets/apple.png';
 import facebook from '../../../assets/facebook.png';
-import useLogin from '../../../hooks/auth/useLogin';
+import { UseLogin } from '../../../hooks/auth/useLogin';
 // import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 
 const index = () => {
-  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
-  const authLogin = useLogin();
-
-  useEffect(() => {
-    authLogin.mutateAsync({
-      email: 'tshalom01@gmail.com',
-      password: 'Oluwabamise@23',
-    });
-  }, []);
+  const authLogin = UseLogin();
 
   let navigate = useNavigate();
 
@@ -38,6 +31,8 @@ const index = () => {
   const handleCreateAccount = () => {
     navigate('/signup');
   };
+
+
   /* 
     handleLogin logs the user in on a succesful input.
     It checks if the user is found in the database and finds the password for the user as well.
@@ -45,10 +40,19 @@ const index = () => {
     -----------------------------
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
   */
-  const handlelogin = () => {
-    if ((userName === 'demo') & (userPassword === 'demo')) {
-      success('Login Successful!');
-      setTimeout(() => navigate('/me/home'), 2000);
+  const handlelogin = (e) => {
+    e.preventDefault();
+    if ((userEmail !== '') & (userPassword !== '')) {
+      authLogin
+        .mutateAsync({
+          email: userEmail,
+          password: userPassword,
+        })
+        .then(() => {
+          console.log(authLogin.value);
+          success('Login Successful!')
+        });
+      // setTimeout(() => navigate('/me/home'), 5000);
     } else {
       error('Incorrect log in');
     }
@@ -80,16 +84,16 @@ const index = () => {
             </div>
             <h2>Welcome Back</h2>
             <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
-            <div className={styles._gs2loginform}>
+            <form className={styles._gs2loginform} onSubmit={handlelogin}>
               <div className={styles._gs2logininput}>
-                <span>Username</span>
+                <span>Email</span>
                 <input
-                  type="text"
-                  placeholder="meisieshalom"
-                  id="userName"
+                  type="email"
+                  placeholder="meisieshalom@example.com"
+                  id="userEmail"
                   required
-                  pattern="[A-Za-z_-]{1,32}"
-                  onChange={(e) => setUserName(e.target.value)}
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  onChange={(e) => setUserEmail(e.target.value)}
                 />
               </div>
               <div className={styles._gs2logininput}>
@@ -109,15 +113,17 @@ const index = () => {
                   <span>Keep me signed in</span>
                 </div>
                 <div className={styles._gs2loginsignin}>
-                  <button className={styles._gsloginforgot} onClick={handleForgotPassword}>
+                  <button type="button" className={styles._gsloginforgot} onClick={handleForgotPassword}>
                     Forgot Password?
                   </button>
                 </div>
               </div>
               <div className={styles._gs2logincontinue}>
-                <button onClick={handlelogin}>Login</button>
+                <button type="submit" onClick={handlelogin}>
+                  Login
+                </button>
                 <div className={styles._gs2loginsignin}>
-                  <button className={styles._gsloginforgot} onClick={handleCreateAccount}>
+                  <button type="button" className={styles._gsloginforgot} onClick={handleCreateAccount}>
                     Create New Account
                   </button>
                 </div>
@@ -125,10 +131,10 @@ const index = () => {
               <div className={styles._gs2sociallogincol}>
                 <p>Alternatively, you can sign up with:</p>
                 <div className={styles._gs2sociallogins}>
-                  <button className={styles._google}>
+                  <button className={styles._google} type="button">
                     <img src={google} alt="google authentication" />
                   </button>
-                  <button className={styles._facebook}>
+                  <button className={styles._facebook} type="button">
                     <img src={facebook} alt="facebook authentication" />
                   </button>
                   <button className={styles._apple}>
@@ -136,7 +142,7 @@ const index = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
         <div className={styles._gs2logincol2}>

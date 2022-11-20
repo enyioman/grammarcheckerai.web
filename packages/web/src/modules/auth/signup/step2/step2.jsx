@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import toast, { Toaster } from 'react-hot-toast';
@@ -13,30 +13,17 @@ import facebook from '../../../../assets/facebook.png';
 import { getStorageData } from '../../../../hooks/useLocalStorage';
 
 const index = () => {
-  const [newUserName, setNewUserName] = useState('')
-  const [newUserFullName, setNewUserFullName] = useState('')
-  const [newUserPassword, setNewUserPassword] = useState('')
-  const [newUserConfirmPassword, setNewUserConfirmPassword] = useState('')
-
-  const [newRegisteredUser, setNewRegisteredUser] = useState('')
+  const [newUserName, setNewUserName] = useState('');
+  const [newUserFirstName, setNewUserFirstName] = useState('');
+  const [newUserLastName, setNewUserLastName] = useState('');
+  const [newUserPassword, setNewUserPassword] = useState('');
+  const [newUserConfirmPassword, setNewUserConfirmPassword] = useState('');
+  const [newUserEmail, setNewUserEmail] = getStorageData('createEmail');
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
 
   const authRegister = useRegister();
-  useEffect(() => {
-    authRegister.mutateAsync({
-      email: 'tshalom@gmail.com',
-      name: 'shalom',
-      firstName: 'First',
-      lastName: 'Last',
-      username: 'newuser',
-      language: 'English',
-      password: 'Oluwabamise@23',
-      confirm_password: 'Oluwabamise@23',
-    });
-  }, []);
-
   let navigate = useNavigate();
   const handlePrev = () => {
     navigate('/signup');
@@ -52,18 +39,30 @@ const index = () => {
   */
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log(newRegisteredUser);
-    if (newUserName === getStorageData('existingUserName')) {
-      error('Username exists!!');
-    } else if (
+    if (
       (newUserName !== '') &
-      (newUserFullName !== '') &
-      (newUserPassword !== '') &
+      (newUserFirstName !== '') &
+      (newUserLastName !== '')(newUserPassword !== '') &
       (newUserConfirmPassword === newUserPassword)
     ) {
-      success("Account Created Succesfully!\nYou'll be redirected to the login in 5 seconds...");
-      setNewRegisteredUser(true);
-      setTimeout(() => navigate('/signin'), 5000);
+      setNewUserEmail(getStorageData('createEmail'));
+      authRegister
+        .mutateAsync({
+          email: newUserEmail,
+          firstName: newUserFirstName,
+          lastName: newUserLastName,
+          username: newUserName,
+          language: 'English',
+          password: newUserPassword,
+          confirm_password: newUserConfirmPassword,
+        })
+        .then(() => {
+          success("Account Created Succesfully!\nYou'll be redirected to the login in 5 seconds...");
+          setTimeout(() => navigate('/signin'), 5000);
+        })
+        .catch((err) => {
+          error(err);
+        });
     } else {
       error('Error creating account\nPlease try again!');
     }
@@ -113,13 +112,23 @@ const index = () => {
                 />
               </div>
               <div className={styles._gs2signupinput}>
-                <span>Full Name</span>
+                <span>First Name</span>
                 <input
                   type="text"
                   required
-                  placeholder="Shalom Taiwo"
-                  onChange={(e) => setNewUserFullName(e.target.value)}
-                  id="signupFullName"
+                  placeholder="Shalom"
+                  onChange={(e) => setNewUserFirstName(e.target.value)}
+                  id="signupFirstName"
+                />
+              </div>
+              <div className={styles._gs2signupinput}>
+                <span>Last Name</span>
+                <input
+                  type="text"
+                  required
+                  placeholder="Taiwo"
+                  onChange={(e) => setNewUserLastName(e.target.value)}
+                  id="signupLastName"
                 />
               </div>
               <div className={styles._gs2signupinput}>
