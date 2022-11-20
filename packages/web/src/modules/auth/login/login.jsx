@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import styles from './login.module.css';
@@ -8,20 +8,24 @@ import Image1 from '../../../assets/error 1.png';
 import google from '../../../assets/google.png';
 import apple from '../../../assets/apple.png';
 import facebook from '../../../assets/facebook.png';
-import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
+import useLogin from '../../../hooks/auth/useLogin';
+// import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 
 const index = () => {
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [existingUserName, setExistingUserName] = useLocalStorage('existingUserName', getStorageData('demoData'));
-  const [existingUserPassword, setExistingUserPassword] = useLocalStorage(
-    'existingUserPassword',
-    getStorageData('demoData'),
-  );
-  const [existingUserEmail, setExistingUserEmail] = useLocalStorage('existingUserEmail', getStorageData('demoData'));
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
+
+  const authLogin = useLogin();
+
+  useEffect(() => {
+    authLogin.mutateAsync({
+      email: 'tshalom01@gmail.com',
+      password: 'Oluwabamise@23',
+    });
+  }, []);
 
   let navigate = useNavigate();
 
@@ -42,18 +46,11 @@ const index = () => {
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
   */
   const handlelogin = () => {
-    setExistingUserName(getStorageData('newUserName'));
-    setExistingUserPassword(getStorageData('newUserPassword'));
-    setExistingUserEmail(getStorageData('createEmail'));
-    if ((userName === existingUserName) & (userPassword === existingUserPassword)) {
-      console.log(existingUserEmail);
+    if ((userName === 'demo') & (userPassword === 'demo')) {
       success('Login Successful!');
       setTimeout(() => navigate('/me/home'), 2000);
     } else {
       error('Incorrect log in');
-      setExistingUserName(getStorageData('demoData'));
-      setExistingUserPassword(getStorageData('demoData'));
-      setExistingUserEmail(getStorageData('demoData'));
     }
   };
   const isTabletorMobile = useMediaQuery({
@@ -89,7 +86,6 @@ const index = () => {
                 <input
                   type="text"
                   placeholder="meisieshalom"
-                  defaultValue={userName}
                   id="userName"
                   required
                   pattern="[A-Za-z_-]{1,32}"
@@ -100,7 +96,6 @@ const index = () => {
                 <span>Password</span>
                 <input
                   type="password"
-                  defaultValue={userPassword}
                   id="userPassword"
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import toast, { Toaster } from 'react-hot-toast';
+import useRegister from '../../../../hooks/auth/useRegister';
 import styles from './step2.module.css';
 import Logo from '../../../../assets/signup-logo.png';
 import Image2 from '../../../../assets/Correction 1.png';
@@ -9,18 +10,32 @@ import Image1 from '../../../../assets/error 1.png';
 import google from '../../../../assets/google.png';
 import apple from '../../../../assets/apple.png';
 import facebook from '../../../../assets/facebook.png';
-import { useLocalStorage, getStorageData } from '../../../../hooks/useLocalStorage';
+import { getStorageData } from '../../../../hooks/useLocalStorage';
 
 const index = () => {
-  const [newUserName, setNewUserName] = useLocalStorage('newUserName', '');
-  const [newUserFullName, setNewUserFullName] = useLocalStorage('newUserFullName', '');
-  const [newUserPassword, setNewUserPassword] = useLocalStorage('newUserPassword', '');
-  const [newUserConfirmPassword, setNewUserConfirmPassword] = useLocalStorage('newUserConfirmPassword', '');
+  const [newUserName, setNewUserName] = useState('')
+  const [newUserFullName, setNewUserFullName] = useState('')
+  const [newUserPassword, setNewUserPassword] = useState('')
+  const [newUserConfirmPassword, setNewUserConfirmPassword] = useState('')
 
-  const [newRegisteredUser, setNewRegisteredUser] = useLocalStorage('userCreated', false);
+  const [newRegisteredUser, setNewRegisteredUser] = useState('')
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
+
+  const authRegister = useRegister();
+  useEffect(() => {
+    authRegister.mutateAsync({
+      email: 'tshalom@gmail.com',
+      name: 'shalom',
+      firstName: 'First',
+      lastName: 'Last',
+      username: 'newuser',
+      language: 'English',
+      password: 'Oluwabamise@23',
+      confirm_password: 'Oluwabamise@23',
+    });
+  }, []);
 
   let navigate = useNavigate();
   const handlePrev = () => {

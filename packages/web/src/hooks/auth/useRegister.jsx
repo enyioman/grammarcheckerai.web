@@ -1,13 +1,13 @@
 import { ENDPOINTS } from '../../lib/constants';
 import useCustomMutation from '../useCustomMutation';
 
-const useLogin = () => {
+const useRegister = () => {
   return useCustomMutation({
     method: 'post',
-    endpoint: ENDPOINTS.API_AUTH_LOGIN,
-    queryKey: 'login',
+    endpoint: ENDPOINTS.API_INITIATE_SIGNUP,
+    queryKey: 'signup',
     showSuccessToast: false,
   });
 };
 
-export default useLogin;
+export default useRegister;

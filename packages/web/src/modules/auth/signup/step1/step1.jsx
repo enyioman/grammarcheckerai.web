@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { useLocalStorage, getStorageData } from '../../../../hooks/useLocalStorage';
+import { useLocalStorage } from '../../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './step1.module.css';
 import Logo from '../../../../assets/signup-logo.png';
@@ -17,7 +17,7 @@ const index = () => {
     e.preventDefault();
     if (userEmail === '') {
       error('Invalid Email');
-    } else if (userEmail === getStorageData('existingUserEmail')) {
+    } else if (userEmail === 'shalom') {
       error('User Already exists!');
     } else {
       navigate('/signup/step-two');
