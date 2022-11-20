@@ -32,7 +32,6 @@ const index = () => {
     navigate('/signup');
   };
 
-
   /* 
     handleLogin logs the user in on a succesful input.
     It checks if the user is found in the database and finds the password for the user as well.
@@ -50,7 +49,10 @@ const index = () => {
         })
         .then(() => {
           console.log(authLogin.value);
-          success('Login Successful!')
+          success('Login Successful!');
+        })
+        .catch((err) => {
+          error(err);
         });
       // setTimeout(() => navigate('/me/home'), 5000);
     } else {

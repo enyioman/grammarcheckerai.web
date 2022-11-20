@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import toast, { Toaster } from 'react-hot-toast';
@@ -10,7 +10,7 @@ import Image1 from '../../../../assets/error 1.png';
 import google from '../../../../assets/google.png';
 import apple from '../../../../assets/apple.png';
 import facebook from '../../../../assets/facebook.png';
-import { getStorageData } from '../../../../hooks/useLocalStorage';
+import { getStorageData, useLocalStorage } from '../../../../hooks/useLocalStorage';
 
 const index = () => {
   const [newUserName, setNewUserName] = useState('');
@@ -18,7 +18,7 @@ const index = () => {
   const [newUserLastName, setNewUserLastName] = useState('');
   const [newUserPassword, setNewUserPassword] = useState('');
   const [newUserConfirmPassword, setNewUserConfirmPassword] = useState('');
-  const [newUserEmail, setNewUserEmail] = getStorageData('createEmail');
+  const [newUserEmail, setNewUserEmail] = useLocalStorage('newUserEmail', getStorageData('createEmail'));
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -39,13 +39,14 @@ const index = () => {
   */
   const handleSignUp = (e) => {
     e.preventDefault();
+    setNewUserEmail(getStorageData('createEmail'));
     if (
       (newUserName !== '') &
       (newUserFirstName !== '') &
-      (newUserLastName !== '')(newUserPassword !== '') &
+      (newUserLastName !== '') &
+      (newUserPassword !== '') &
       (newUserConfirmPassword === newUserPassword)
     ) {
-      setNewUserEmail(getStorageData('createEmail'));
       authRegister
         .mutateAsync({
           email: newUserEmail,
