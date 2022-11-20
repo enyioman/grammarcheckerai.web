@@ -20,7 +20,7 @@ import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
 import EmailTemplate from './modules/static/emailtemplate/EmailTemplate';
 import NewsletterErrorPopUp from './modules/modal/newsletter/newsletterErrorPopUp/NewsletterErrorPopUp';
-import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage, Settings } from './pages';
+import { HomePage, History, Correction, ConversationPage, LandingPage, AboutPage , LegalPage, Settings } from './pages';
 import Careers from './pages/career/Career';
 import Roles from './pages/career/Roles';
 import Application from './pages/career/Application';
@@ -31,7 +31,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<ConversationPage />} />
-      <Route path="/history" element={<h2>History</h2>} />
+      <Route path="/history" element={<History />} />
       <Route path="/gritty-grammar" element={<LandingPage />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/history" element={<History />} />
