@@ -7,6 +7,7 @@ services:
       - "3000:5000"
     networks:
       - hng-internal
+    container_name: gritty-backend
     restart: always
     environment:
       - NODE_ENV=production
@@ -31,13 +32,29 @@ services:
       - MODEL_KEY=103b378d-495b-4430-80d8-0c6c490525b7
       - API_KEY=c5d2f9b9-9869-41be-bd24-e274452504cf
       - FILE_SIZE=104857
+    depends_on:
+      - mongo
   frontend:
     image: asyncdeveloper/grammar-check-frontend:latest
     ports:
       - "5000:5000"
+    container_name: gritty-frontend
     networks:
       - hng-internal
     restart: always
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+
+    networks:
+      - hng-internal
+    volumes:
+      - mongodb-internal:/data/db
 
 networks:
   hng-internal:
+
+volumes:
+  mongodb-internal:
