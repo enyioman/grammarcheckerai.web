@@ -46,6 +46,11 @@ let schema = new mongoose.Schema(
       type: String,
       default: () => v4(),
     },
+    is_subscribed: {
+      type: Boolean,
+      allowNull: true,
+      default: null
+    }
   },
   {
     timestamps: true,
@@ -79,7 +84,7 @@ schema.methods.generateAuthToken = function () {
   return token;
 };
 
-schema.methods.generateHash = async(reqPassword)=>{ 
+schema.methods.generateHash = async (reqPassword) => {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(reqPassword, salt);
 };

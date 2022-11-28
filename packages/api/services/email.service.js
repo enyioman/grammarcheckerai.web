@@ -17,7 +17,7 @@ const emailService = async ({ to, subject, body, templateId, data }) => {
       });
 
       resolve(true);
-    } catch (err) { 
+    } catch (err) {
       resolve(false);
     }
   });
