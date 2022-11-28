@@ -1,14 +1,7 @@
-// const {
-//     getConfirm,
-//     postSignup,
-//     postUpload
-// } = require('../controller/newsLetterController')
-// const express = require('express')
-// const router = express.Router()
+const { Router } = require("express");
+const { updateIsSubscribed } = require("../controller/newsLetterController");
+const newsletterRouter = Router();
 
-// router
-//     .get('/confirmNewsletterEmail', getConfirm)
-//     .post('/signupNewsletterEmail', postSignup)
-//     .post('/UploadNewsletter', postUpload)
+newsletterRouter.put('/newsletter/confirm?', updateIsSubscribed)
 
-// module.exports = router;
+module.exports = newsletterRouter;
