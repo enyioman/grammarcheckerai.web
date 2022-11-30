@@ -65,7 +65,7 @@ export default function Testimonial() {
     <div>
       <div className="mx-6 lg:mx-32">
         <h1 className="text-center text-lg sm:text-2xl lg:text-4xl">Users Love What We Do</h1>
-        <p className="text-cente my-4 text-sm lg:text-lg">
+        <p className="text-center my-4 text-sm lg:text-lg">
           Read the stories of our users who have relied on our product to improve their grammar
         </p>
         <main className="lg:grid space-y-6 lg:space-y-0 grid-cols-3 gap-8 my-14">
