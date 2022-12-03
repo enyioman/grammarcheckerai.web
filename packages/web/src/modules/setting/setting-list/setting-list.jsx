@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 function SettingOption({ option, arrowRight, children, openBar }) {
   return (
     <div

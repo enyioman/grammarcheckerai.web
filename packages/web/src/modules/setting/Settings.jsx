@@ -13,7 +13,7 @@ import {
   ChineseFlagIcon,
   GermanyFlagIcon,
   ItalianFlagIcon,
-} from '../../../assets';
+} from '../../assets';
 import FontAdjustment from './font-adjustment/font-adjustment';
 import HelpSupport from './help-support/help-support';
 import Languages from './language/languages';
@@ -97,17 +97,20 @@ function Settings() {
       route: 'language',
       name: 'Language',
       icon: languageIcon,
+      query: 'language, english, french, spanish, german, russian, italian, chinese',
       child: <Languages openBar={subPage} universalLanguage={languageList} />,
     },
     {
       name: 'Font Size Adjustment',
       icon: maximizeIcon,
+      query: 'font size adjustment',
       child: <FontAdjustment />,
     },
     {
       route: 'help',
       name: 'Help & Support',
       icon: infinityIcon,
+      query: 'With exceptional customer service, try Gritty Grammer, the best Grammer software out there',
       child: <HelpSupport />,
     },
   ];

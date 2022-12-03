@@ -29,7 +29,7 @@ const Conversation = lazy(() => import('./modules/account/conversation'));
 const ConversationTry = lazy(() => import('./modules/account/conversation/chat'));
 const Landing = lazy(() => import('./modules/static/landing-page/LandingPage'));
 const Legal = lazy(() => import('./pages/Legal/index'));
-const SettingsPage = lazy(() => import('./modules/setting/home-settings/Settings'));
+const SettingsPage = lazy(() => import('./modules/setting/Settings'));
 const Transcribe = lazy(() => import('./modules/transcribe/index'));
 const CareerPage = lazy(() => import('./pages/career/Career'));
 const AboutPage = lazy(() => import('./pages/about/About'));
@@ -305,7 +305,7 @@ function App() {
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="reset-password" element={<ResetLink />} />
       </Route>
-      <Route path="/me" element={isDashboard === false ? <Navigate to="/signin" /> : <DashboardLayout />}>
+      <Route path="/me" element={<DashboardLayout />}>
         <Route path="home" element={<HomePage />} />
         <Route path="history" element={<History />} />
         <Route path="history/correction" element={<Correction />} />
