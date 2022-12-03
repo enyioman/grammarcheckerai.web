@@ -32,6 +32,8 @@ function Settings() {
     { name: 'Chinese', flag: ChineseFlagIcon },
   ]);
 
+  const [searchTerm, setsearchTerm] = useState('');
+
   const userId = localStorage.getItem('grittyuserid'); // Get user ID
   const userToken = localStorage.getItem('grittyusertoken'); // Get bearer token
 
@@ -144,18 +146,30 @@ function Settings() {
               id="search"
               placeholder="Search for a setting"
               className="w-full outline-0 border-0 px-3 py-2 font-normal"
+              onChange={(event) => {
+                setsearchTerm(event.target.value);
+              }}
             />
             <img className="" src={searchIcon} alt="search for a setting" />
           </label>
         </div>
         <div className="flex flex-col gap-6">
-          {settingList.map((option, index) => {
-            return (
-              <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
-                {option.child}
-              </SettingOption>
-            );
-          })}
+          {settingList
+            .filter((obj) => {
+              if (searchTerm === '' || obj.query.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return obj;
+              } else if (settingList.every((val) => !val.query.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                // If There is no result then show all list
+                return obj;
+              }
+            })
+            .map((option, index) => {
+              return (
+                <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
+                  {option.child}
+                </SettingOption>
+              );
+            })}
         </div>
       </div>
       {languageBar && <LanguageOption openBar={subPage} languageList={languageList} changeLanguage={changeLanguage} />}
