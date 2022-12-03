@@ -110,9 +110,17 @@
   align-items: center;
   text-align: center;
   padding: 16px 40px;
+  text-transform: capitalize;
   color: #fff;
   background: #5d387f;
   border-radius: 12px;
+  transition: all 0.4s ease-in-out;
+}
+._gcforgotcontinue button:hover {
+  background: #392150;
+}
+._gcforgotcontinue button:hover {
+  background: #5d387f;
 }
 ._gcforgotfooter p {
   font-style: normal;
